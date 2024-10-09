@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import ffmpeg
-import re
 import subprocess, sys, os
 
 def select_video():
@@ -11,8 +10,13 @@ def select_video():
         video_entry.insert(0, video_path)
         set_time_slider(video_path)
 
+def Exit():
+    root.destroy()
+    root.quit()
+    
 def update_value(new_value):
-    disp_label.config(text=f"Selected Value: {new_value}")
+    new_value = int(float(new_value))
+    disp_label.config(text=f"Selected Start Time: {new_value}")
     
     
 
@@ -61,32 +65,37 @@ def merge_audio_video():
 # Create the main window
 root = tk.Tk()
 root.title("Video and Audio Merger")
-root.geometry("400x400")
+root.geometry("400x380")
 
 # Video selection
 tk.Label(root, text="Selected Video:").pack(pady=5)
 video_entry = tk.Entry(root, width=50)
-video_entry.pack(pady=5)
+video_entry.pack(pady=4)
 tk.Button(root, text="Select Video", command=select_video).pack(pady=5)
 
 # Audio selection
 tk.Label(root, text="Selected Audio:").pack(pady=5)
 audio_entry = tk.Entry(root, width=50)
-audio_entry.pack(pady=5)
+audio_entry.pack(pady=4)
 tk.Button(root, text="Select Audio", command=select_audio).pack(pady=5)
 
 # Time slider
 time_label = tk.Label(root, text="Set Start Time:")
-time_label.pack(pady=5)
+time_label.pack(pady=4)
 time_slider = ttk.Scale(root, from_=0, to=100, orient='horizontal',command=update_value)
 time_slider.pack(pady=5, fill=tk.X)
 
 # dipslay selcted time
-disp_label = tk.Label(root, text="Selected Value:")
-disp_label.pack(pady=5)
+disp_label = tk.Label(root, text="Selected Start Time:")
+disp_label.pack(pady=4)
 
 # Merge button
-tk.Button(root, text="Merge Audio to Video", command=merge_audio_video).pack(pady=20)
+tk.Button(root, text="Merge Audio to Video", command=merge_audio_video).pack(pady=10)
+
+# Exit Button
+tk.Button(root, text="Exit", command=Exit).pack(pady=10)
 
 # Run the application
 root.mainloop()
+
+
